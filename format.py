@@ -22,6 +22,6 @@ def formatData(loc, sizeTreshold):
 
 data = formatData(os.getcwd() + '\\taxi_log_2008_by_id', 10000)
 
-f = open("COVIDdata.pickle", "wb")
+f = open('COVIDdata.pkl', 'wb')
 pickle.dump(data, f)
 f.close()
