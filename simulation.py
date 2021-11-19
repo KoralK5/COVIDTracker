@@ -29,9 +29,13 @@ treshold = 0.00005
 for key in data:
 	values = data[key]
 	for p1 in values:
+		long1, lat1 = p1[1], p1[2]
+
+		people[p1[0]][1] = long1
+		people[p1[0]][2] = lat1
+
 		for p2 in people:
 			if p1[0] != p2:
-				long1, lat1 = p1[1], p1[2]
 				long2, lat2 = people[p2][1], people[p2][2]
 				dist = distance(long1, lat1, long2, lat2)
 
