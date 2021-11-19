@@ -25,7 +25,7 @@ for i in range(infections):
 	people[idx][0] = True
 
 print('Starting Simulation...\n')
-treshold = 0.0005
+treshold = 0.00005
 for key in data:
 	values = data[key]
 	for p1 in values:
