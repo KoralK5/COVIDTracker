@@ -31,12 +31,13 @@ for key in data:
 	values = data[key]
 	for p1 in values:
 		for p2 in people:
-			long1, lat1 = p1[1], p1[2]
-			long2, lat2 = people[p2][1], people[p2][2]
-			dist = distance(long1, lat1, long2, lat2)
+			if p1[0] != p2:
+				long1, lat1 = p1[1], p1[2]
+				long2, lat2 = people[p2][1], people[p2][2]
+				dist = distance(long1, lat1, long2, lat2)
 
-			if dist < treshold and (people[p1[0]][0] or people[p2][0]):
-				people[p1[0]][0] = True
-				people[p2][0] = True
-				infections += 1
+				if dist < treshold and (people[p1[0]][0] or people[p2][0]):
+					people[p1[0]][0] = True
+					people[p2][0] = True
+					infections += 1
 	print(f'{key}: {infections} infections')
