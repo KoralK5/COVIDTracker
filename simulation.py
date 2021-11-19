@@ -21,13 +21,12 @@ print('Initializing Infections...\n')
 people = people(os.getcwd() + '\\taxi_log_2008_by_id', 10000)
 infections = 10
 for i in range(infections):
-	idx = random.choice(list(people.keys()))
-	people[idx][0] = True
+	people[random.choice(list(people.keys()))][0] = True
 
 print('Starting Simulation...\n')
 treshold = 0.00005
-for key in data:
-	values = data[key]
+for time in data:
+	values = data[time]
 	for p1 in values:
 		long1, lat1 = p1[1], p1[2]
 		people[p1[0]][1] = long1
@@ -42,4 +41,4 @@ for key in data:
 					people[p1[0]][0] = True
 					people[p2][0] = True
 					infections += 1
-	print(f'{key}: {infections} infections')
+	print(f'{time}: {infections} infections')
