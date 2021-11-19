@@ -4,36 +4,39 @@ def people(loc, sizeTreshold):
 	people = {}
 	for filename in os.listdir(loc):
 		if os.path.getsize(loc + f'\\{filename}') > sizeTreshold:
-			people[int(filename[:filename.index('.')])] = False
+			f = open(loc + f'\\{filename}', 'r').read().strip()
+			f = f[:f.index('\n')]
+			uid, date, lat, lon = f.split(',')
+			people[int(filename[:filename.index('.')])] = [False, float(lat), float(lon)]
 	return people
 
 def distance(long1, lat1, long2, lat2):
 	return math.sqrt((long1-long2)**2 + (lat1-lat2)**2)
 
-def closeness(long1, lat1, long2, lat2, treshold):
-    return distance(long1, lat1, long2, lat2) < treshold
-
 print('Formatting Data...\n')
 f = open('COVIDdata.pkl', 'rb')
 data = pickle.load(f)
 
+print('Initializing Infections...\n')
 people = people(os.getcwd() + '\\taxi_log_2008_by_id', 10000)
-initial = 10
-for i in range(initial):
-	people[random.choice(list(people.items()))] = True
+infections = 10
+for i in range(infections):
+	idx = random.choice(list(people.keys()))
+	people[idx][0] = True
+	print(people[idx])
 
 print('Starting Simulation...\n')
-treshold = 0.000005
+treshold = 0.005
 for key in data:
 	values = data[key]
-	size = len(values)
-	for p1 in range(0, size):
-		for p2 in range(p1+1, size):
-			long1, lat1 = values[p1][1], values[p1][2]
-			long2, lat2 = values[p2][1], values[p2][2]
-			interact = closeness(long1, lat1, long2, lat2, treshold)
+	for p1 in values:
+		for p2 in people:
+			long1, lat1 = p1[1], p1[2]
+			long2, lat2 = people[p2][1], people[p2][2]
+			dist = distance(long1, lat1, long2, lat2)
 
-			if interact and (people[values[p1][0]] or people[values[p2][0]]):
-				people[values[p1][0]] = True
-				people[values[p2][0]] = True
-				print(values[p1][0], values[p2][0])
+			if dist < treshold and (people[p1[0]][0] or people[p2][0]):
+				people[p1[0]][0] = True
+				people[p2][0] = True
+				infections += 1
+	print(f'{key}: {infections} infections')
