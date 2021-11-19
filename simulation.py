@@ -30,7 +30,6 @@ for key in data:
 	values = data[key]
 	for p1 in values:
 		long1, lat1 = p1[1], p1[2]
-
 		people[p1[0]][1] = long1
 		people[p1[0]][2] = lat1
 
