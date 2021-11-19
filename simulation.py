@@ -28,7 +28,7 @@ for key in data:
 			long2, lat2 = values[p2][1], values[p2][2]
 			close = closeness(long1, lat1, long2, lat2, treshold)
 
-			if close and (infections[p1] or infectionsp[p2]):
+			if close and (infections[p1] or infections[p2]):
 				infections[p1] = True
 				infections[p2] = True
 	print(infections)
