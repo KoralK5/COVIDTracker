@@ -9,7 +9,7 @@ def closeness(long1, lat1, long2, lat2, treshold):
 f = open('COVIDdata.pkl', 'rb')
 data = pickle.load(f)
 
-treshold = 0.0005
+treshold = 0.000005
 close = 0
 for key in data:
 	values = data[key]
