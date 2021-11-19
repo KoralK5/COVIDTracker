@@ -33,6 +33,6 @@ for key in data:
 			close = closeness(long1, lat1, long2, lat2, treshold)
 
 			if close and (infections[values[p1][0]] or infections[values[p2][0]]):
-				infections[p1] = True
-				infections[p2] = True
-	print(infections)
+				infections[values[p1][0]] = True
+				infections[values[p2][0]] = True
+				print(values[p1][0], values[p2][0])
