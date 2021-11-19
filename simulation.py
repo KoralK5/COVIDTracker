@@ -13,14 +13,16 @@ def distance(long1, lat1, long2, lat2):
 def closeness(long1, lat1, long2, lat2, treshold):
     return distance(long1, lat1, long2, lat2) < treshold
 
+print('Formatting Data...\n')
 f = open('COVIDdata.pkl', 'rb')
 data = pickle.load(f)
 
 people = people(os.getcwd() + '\\taxi_log_2008_by_id', 10000)
-initial = 100
+initial = 10
 for i in range(initial):
 	people[random.choice(list(people.items()))] = True
 
+print('Starting Simulation...\n')
 treshold = 0.000005
 for key in data:
 	values = data[key]
