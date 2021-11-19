@@ -17,6 +17,10 @@ f = open('COVIDdata.pkl', 'rb')
 data = pickle.load(f)
 
 infections = people(os.getcwd() + '\\taxi_log_2008_by_id', 10000)
+initial = 10
+for i in range(initial):
+	infections[random.choice(list(infections.items()))] = True
+
 treshold = 0.000005
 close = 0
 for key in data:
