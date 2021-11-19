@@ -23,10 +23,9 @@ infections = 10
 for i in range(infections):
 	idx = random.choice(list(people.keys()))
 	people[idx][0] = True
-	print(people[idx])
 
 print('Starting Simulation...\n')
-treshold = 0.005
+treshold = 0.0005
 for key in data:
 	values = data[key]
 	for p1 in values:
