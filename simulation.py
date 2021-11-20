@@ -16,6 +16,11 @@ def people(loc, sizeTreshold):
 def distance(long1, lat1, long2, lat2):
 	return sqrt((long1-long2)**2 + (lat1-lat2)**2)
 
+def store(folder, data, time):
+	f = open(f'{folder}\\{time.replace(":", " ")}.pkl', 'wb')
+	pickle.dump(data, f)
+	f.close()
+
 print('Formatting Data...\n')
 f = open('COVIDdata.pkl', 'rb')
 data = pickle.load(f)
@@ -26,6 +31,8 @@ people = people(os.getcwd() + '\\taxi_log_2008_by_id', 10000)
 infections = 10
 for i in range(infections):
 	people[random.choice(list(people.keys()))][0] = True
+
+dataFolder = os.getcwd() + '\\spreadData'
 
 print('Starting Simulation...\n')
 treshold = 0.00005
@@ -45,4 +52,5 @@ for time in data:
 					people[p1[0]][0] = True
 					people[p2][0] = True
 					infections += 1
+	store(dataFolder, people, time)
 	print(f'{time}: {infections} infections')
