@@ -24,7 +24,6 @@ files = os.listdir(os.getcwd() + '\\spreadData')
 f = 0
 running = True
 while running:
-	clock.tick(FPS)
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			pygame.quit()
@@ -35,7 +34,7 @@ while running:
 	data = grab(files[f])
 	for i in data.keys():
 		color = RED if data[i][0] else BLUE
-		pygame.draw.circle(screen, color, [(data[i][1] - 40.193113) * x, (data[2][0] - 115.796458) * y], 1)
+		pygame.draw.circle(screen, color, [(data[i][2] - 40.193113) * x, (data[i][1] - 115.796458) * y], 2)
 	
 	pygame.display.flip()
 	f += 1
