@@ -47,7 +47,7 @@ for time in data:
 		people[p1[0]][2] = lat1
 
 		for p2 in people:
-			if (p1[0] != p2) and (people[p1[0]][0] or people[p2][0]):
+			if (p1[0] != p2) and (people[p1[0]][0] ^ people[p2][0]):
 				long2, lat2 = people[p2][1], people[p2][2]
 				dist = distance(long1, lat1, long2, lat2)
 
