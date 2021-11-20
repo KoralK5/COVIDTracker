@@ -40,8 +40,7 @@ dataFolder = os.getcwd() + '\\spreadData'
 print('Starting Simulation...\n')
 treshold = 0.00005
 for time in data:
-	values = data[time]
-	for p1 in values:
+	for p1 in data[time]:
 		long1, lat1 = p1[1], p1[2]
 		people[p1[0]][1] = long1
 		people[p1[0]][2] = lat1
