@@ -1,4 +1,3 @@
-
 import pickle
 import random
 import os
@@ -39,7 +38,13 @@ dataFolder = os.getcwd() + '\\spreadData'
 
 print('Starting Simulation...\n')
 treshold = 0.00005
+couple = []
+maybeInfect = []
+i = 0
 for time in data:
+	i += 1
+	if i > 5:
+		clear(couple)
 	for p1 in data[time]:
 		long1, lat1 = p1[1], p1[2]
 		people[p1[0]][1] = long1
@@ -50,11 +55,16 @@ for time in data:
 				long2, lat2 = people[p2][1], people[p2][2]
 				dist = distance(long1, lat1, long2, lat2)
 
-				if dist < treshold:
+				if dist < treshold and [p1, p2] in couple:
 					people[p1[0]][0] = True
 					people[p2][0] = True
 					infections += 1
 					hotSpots[long1, lat1] = [random.randint(1, 50), 0.00001] # infection chance, hotspot size
+
+				elif dist < treshold:
+					couple.append(p1, p2)
+					#infections += 1
+					#hotSpots[long1, lat1] = [random.randint(1, 50), 0.00001] # infection chance, hotspot size
 		for i in list(hotSpots):
 			list(hotSpots)[i][0] = long2
 			list(hotSpots)[i][1] = lat2
