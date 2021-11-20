@@ -1,3 +1,4 @@
+
 import pickle
 import random
 import os
@@ -54,11 +55,11 @@ for time in data:
 					people[p1[0]][0] = True
 					people[p2][0] = True
 					infections += 1
-                    hotSpots[long1, lat1] = [random.randint(1, 50), 0.00001] # infection chance, hotspot size
-        for i in list(hotSpots):
-            list(hotSpots)[i][0] = long2
-            list(hotSpots)[i][1] = lat2
-            if distance(long1, lat1, long2, lat2) < hotSpots[i].values()[1] and random.randint(1, 100) < hotSpots[i].values()[0]:
-                people[p1[0]][0] = True
+					hotSpots[long1, lat1] = [random.randint(1, 50), 0.00001] # infection chance, hotspot size
+		for i in list(hotSpots):
+			list(hotSpots)[i][0] = long2
+			list(hotSpots)[i][1] = lat2
+			if distance(long1, lat1, long2, lat2) < hotSpots[i].values()[1] and random.randint(1, 100) < hotSpots[i].values()[0]:
+				people[p1[0]][0] = True
 	store(dataFolder, people, time)
 	print(f'{time}: {infections} infections')
