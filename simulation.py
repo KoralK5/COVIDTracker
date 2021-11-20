@@ -45,6 +45,9 @@ for time in data:
 	i += 1
 	if i > 5:
 		clear(couple)
+	for i in list(hotSpots):
+		hotSpots[i][1] += hostSpots[i][1] * 0.01
+
 	for p1 in data[time]:
 		long1, lat1 = p1[1], p1[2]
 		people[p1[0]][1] = long1
@@ -70,5 +73,6 @@ for time in data:
 			list(hotSpots)[i][1] = lat2
 			if distance(long1, lat1, long2, lat2) < hotSpots[i].values()[1] and random.randint(1, 100) < hotSpots[i].values()[0]:
 				people[p1[0]][0] = True
+				hotSpots[i][0] += hotSpots[i][0] * 0.05
 	store(dataFolder, people, time)
 	print(f'{time}: {infections} infections')
