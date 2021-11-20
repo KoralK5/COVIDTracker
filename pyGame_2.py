@@ -6,7 +6,7 @@ with open("2008-02-02_13_30.pkl", 'rb') as f:
         
 location = []
 for i in list(data):
-    location.append(data[i][1:3])
+    location.append(data[i][1:])
 
 # top left = 40.193113, 115.796458
 # bottom right = 39.725749, 116.844279
