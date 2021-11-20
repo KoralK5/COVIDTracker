@@ -5,6 +5,8 @@ A COVID spread predictor using 2008 taxi location data
 
 [Formatted Data](https://mega.nz/file/eaIFSCbJ#-pXau9W7MIXGhFPEd7u3tmWPRUahH6y761aWOAu82Bw)
 
+[Timed Data](https://mega.nz/folder/eaJBhQYC#Sfh_nfk2NZMaZ8W6TaHzpQ)
+
 ![image](https://user-images.githubusercontent.com/62809012/142708478-fc6d47c2-6716-424c-81fc-6a6c4de94bea.png)
 
 dataset by:
