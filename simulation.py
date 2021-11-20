@@ -19,6 +19,7 @@ def distance(long1, lat1, long2, lat2):
 print('Formatting Data...\n')
 f = open('COVIDdata.pkl', 'rb')
 data = pickle.load(f)
+data = {i:data[i] for i in sorted(data)}
 
 print('Initializing Infections...\n')
 people = people(os.getcwd() + '\\taxi_log_2008_by_id', 10000)
