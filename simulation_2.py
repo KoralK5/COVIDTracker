@@ -1,49 +1,55 @@
-import pygame, pickle, os
+import pickle
+import random
+import os
+from math import sqrt
 
-x = -2738.7646
-y = 977.266
+def people(loc, sizeTreshold):
+	people = {}
+	for filename in os.listdir(loc):
+		if os.path.getsize(loc + f'\\{filename}') > sizeTreshold:
+			f = open(loc + f'\\{filename}', 'r').read().strip()
+			f = f[:f.index('\n')]
+			uid, date, lat, lon = f.split(',')
+			people[int(filename[:filename.index('.')])] = [False, float(lat), float(lon)]
+	return people
 
-background_image = pygame.image.load(f'{os.getcwd()}\\Images\\maps_shot.png')
-IMAGE_SMALL = pygame.transform.scale(background_image, (1280, 1024))
-pygame.init()
+def distance(long1, lat1, long2, lat2):
+	return sqrt((long1-long2)**2 + (lat1-lat2)**2)
 
-BGCOLOR = (255, 255, 255)
-RED = (255, 0, 0)
-BLUE = (0, 0, 255)
-FPS = 30
+def store(folder, data, time):
+	f = open(f'{folder}\\{time.replace(":", " ")}.pkl', 'wb')
+	pickle.dump(data, f)
+	f.close()
 
-screen = pygame.display.set_mode((1280, 1024))
-pygame.display.update()
-clock = pygame.time.Clock()
+print('Formatting Data...\n')
+f = open('COVIDdata.pkl', 'rb')
+data = pickle.load(f)
+data = {i:data[i] for i in sorted(data)}
 
-def grab(filename):
-	return pickle.load(open(f'{os.getcwd()}\\spreadData\\{filename}', 'rb'))
+print('Initializing Infections...\n')
+people = people(os.getcwd() + '\\taxi_log_2008_by_id', 10000)
+infections = 10
+for i in range(infections):
+	people[random.choice(list(people.keys()))][0] = True
 
-files = os.listdir(os.getcwd() + '\\spreadData')
+dataFolder = os.getcwd() + '\\chanceSpreadData'
 
-f = 0
-running = True
-while running:
-	clock.tick(FPS)
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			pygame.quit()
+print('Starting Simulation...\n')
+treshold = 0.00005
+for time in data:
+	for p1 in data[time]:
+		long1, lat1 = p1[1], p1[2]
+		people[p1[0]][1] = long1
+		people[p1[0]][2] = lat1
 
-	screen.fill(BGCOLOR)
-	screen.blit(IMAGE_SMALL, [0, 0])
-	
-	infected, uninfected = 0, 0
-	data = grab(files[f])
-	for i in data.keys():
-		color = RED if data[i][0] else BLUE
-		infected += data[i][0]
-		uninfected += not(data[i][0])
-		pygame.draw.circle(screen, color, [(data[i][2] - 40.193113) * x, (data[i][1] - 115.796458) * y], 2)
-	
-	t = files[f].split(' ')
-	t = f'{t[0]} {t[1]}:{t[2][:2]} ----- {uninfected} uninfected ----- {infected} infected'
-	pygame.display.flip()
-	pygame.display.set_caption(t)
-	f += 1
+		for p2 in people:
+			if (p1[0] != p2) and (people[p1[0]][0] ^ people[p2][0]) and (random.random() < 0.3):
+				long2, lat2 = people[p2][1], people[p2][2]
+				dist = distance(long1, lat1, long2, lat2)
 
-pygame.quit()
+				if dist < treshold:
+					people[p1[0]][0] = True
+					people[p2][0] = True
+					infections += 1
+	store(dataFolder, people, time)
+	print(f'{time}: {infections} infections')
